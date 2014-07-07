@@ -1,0 +1,10 @@
+Question,Answer,Latitude,Longitude,Altitude,Accuracy,Altitude Accuracy,Heading,Speed,Timestamp
+1,1,50,52.2178598,6.8969659,null,996,null,null,null,Sat Aug 24 2013 12:05:28 GMT+0200 (CEST)
+2,C,52.2178598,6.8969659,null,996,null,null,null,Sat Aug 24 2013 12:05:28 GMT+0200 (CEST)
+3,oranje,52.2178598,6.8969659,null,996,null,null,null,Sat Aug 24 2013 12:05:28 GMT+0200 (CEST)
+4,martin meijers,52.2178598,6.8969659,null,996,null,null,null,Sat Aug 24 2013 12:05:28 GMT+0200 (CEST)
+5,C,52.2178598,6.8969659,null,996,null,null,null,Sat Aug 24 2013 12:05:28 GMT+0200 (CEST)
+6,A,52.2178598,6.8969659,null,996,null,null,null,Sat Aug 24 2013 12:05:28 GMT+0200 (CEST)
+7,A,52.2178598,6.8969659,null,996,null,null,null,Sat Aug 24 2013 12:05:28 GMT+0200 (CEST)
+8,C,52.2178598,6.8969659,null,996,null,null,null,Sat Aug 24 2013 12:05:28 GMT+0200 (CEST)
+9,blauw,52.2178598,6.8969659,null,996,null,null,null,Sat Aug 24 2013 12:05:28 GMT+0200 (CEST)

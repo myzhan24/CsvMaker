@@ -1,0 +1,5 @@
+Question,Answer,Latitude,Longitude,Altitude,Accuracy,Altitude Accuracy,Heading,Speed,Timestamp
+1,1,50,52.2199018,6.8960806,null,883,null,null,null,Sat Aug 24 2013 11:21:33 GMT+0200 (CEST)
+2,1,00,52.2211296,6.895861,null,757,null,null,null,Sat Aug 24 2013 11:26:52 GMT+0200 (CEST)
+3,C,52.2211296,6.895861,null,757,null,null,null,Sat Aug 24 2013 11:26:52 GMT+0200 (CEST)
+4,martin meijers,52.21714397,6.89912134,94.4,4,null,0,0,Sat Aug 24 2013 11:45:18 GMT+0200 (CEST)

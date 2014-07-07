@@ -1,0 +1,5 @@
+Question,Answer,Latitude,Longitude,Altitude,Accuracy,Altitude Accuracy,Heading,Speed,Timestamp
+1,C,52.2229735,6.8913689,null,1005,null,null,null,1377335777874
+2,A,52.2220516,6.8936149,null,757,null,null,null,1377335810187
+3,blauw,52.2220516,6.8936149,null,757,null,null,null,1377335810187
+4,martin meijers,52.2173712,6.900428,null,759,null,null,null,1377336313034

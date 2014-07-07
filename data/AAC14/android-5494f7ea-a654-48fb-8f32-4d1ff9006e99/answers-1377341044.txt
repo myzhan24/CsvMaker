@@ -1,0 +1,7 @@
+Question,Answer,Latitude,Longitude,Altitude,Accuracy,Altitude Accuracy,Heading,Speed,Timestamp
+1,C,52.2234663,6.8914965,null,1377,null,null,null,1377337793505
+2,dienst uitvoering onderwijs,52.2234663,6.8914965,null,1377,null,null,null,1377337793505
+3,D,52.2234663,6.8914965,null,1377,null,null,null,1377338731510
+4,D,52.2234663,6.8914965,null,1377,null,null,null,1377339728188
+5,D,52.2234663,6.8914965,null,1377,null,null,null,1377340228236
+6,1,00,52.2234663,6.8914965,null,1377,null,null,null,1377340568381

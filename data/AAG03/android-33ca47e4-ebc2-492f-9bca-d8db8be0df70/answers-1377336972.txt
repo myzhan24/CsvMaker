@@ -1,0 +1,2 @@
+Question,Answer,Latitude,Longitude,Altitude,Accuracy,Altitude Accuracy,Heading,Speed,Timestamp
+1,C,52.22057524,6.89637732,97.19999694824219,8,null,189.8000030517578,1.25,1377336757560

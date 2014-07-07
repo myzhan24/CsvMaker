@@ -1,0 +1,6 @@
+Question,Answer,Latitude,Longitude,Altitude,Accuracy,Altitude Accuracy,Heading,Speed,Timestamp
+1,C,52.2196998,6.8924915,null,46,null,null,null,Sat Aug 24 2013 11:42:49 GMT+0200 (CEST)
+2,C,52.2201227,6.8872276,null,55,null,null,null,Sat Aug 24 2013 11:45:46 GMT+0200 (CEST)
+3,C,52.2201682,6.8873366,null,20,null,null,null,Sat Aug 24 2013 11:46:12 GMT+0200 (CEST)
+4,Dienst uitvoering onderwijs,52.2201682,6.8873366,null,20,null,null,null,Sat Aug 24 2013 11:46:12 GMT+0200 (CEST)
+5,B,52.2201682,6.8873366,null,20,null,null,null,Sat Aug 24 2013 11:46:12 GMT+0200 (CEST)

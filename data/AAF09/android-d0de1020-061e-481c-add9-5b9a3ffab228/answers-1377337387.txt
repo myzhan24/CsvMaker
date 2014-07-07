@@ -1,0 +1,4 @@
+Question,Answer,Latitude,Longitude,Altitude,Accuracy,Altitude Accuracy,Heading,Speed,Timestamp
+1,C,52.2209702,6.8954874,null,20.378999710083008,null,null,null,1377336085846
+2,A,52.2194493,6.9001126,null,26.489999771118164,null,null,null,1377336588516
+3,oranje,52.216363,6.9023074,null,36,null,null,null,1377337229832

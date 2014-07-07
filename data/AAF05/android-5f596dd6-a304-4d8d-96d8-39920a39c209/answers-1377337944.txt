@@ -1,0 +1,3 @@
+Question,Answer,Latitude,Longitude,Altitude,Accuracy,Altitude Accuracy,Heading,Speed,Timestamp
+1,C,52.2207378,6.8964496,null,34.93199920654297,null,null,null,1377336917569
+2,Martin Meijers,52.2170853,6.899118,null,49.98099899291992,null,null,null,1377337640740

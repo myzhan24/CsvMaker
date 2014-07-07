@@ -1,0 +1,4 @@
+Question,Answer,Latitude,Longitude,Altitude,Accuracy,Altitude Accuracy,Heading,Speed,Timestamp
+1,B,52.2204006,6.8970613,null,787,null,null,null,Sat Aug 24 2013 11:24:01 GMT+0200 (CEST)
+2,1,50,52.2204006,6.8970613,null,787,null,null,null,Sat Aug 24 2013 11:24:01 GMT+0200 (CEST)
+3,D,52.2204006,6.8970613,null,787,null,null,null,Sat Aug 24 2013 11:24:01 GMT+0200 (CEST)

@@ -1,0 +1,2 @@
+Latitude,Longitude,Altitude,Accuracy,Altitude Accuracy,Heading,Speed,Timestamp
+52.2170197,6.8993751,null,36,null,null,null,Sat Aug 24 2013 12:00:36 GMT+0200 (CEST)

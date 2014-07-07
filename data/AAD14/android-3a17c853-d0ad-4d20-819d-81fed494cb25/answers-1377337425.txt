@@ -1,0 +1,2 @@
+Question,Answer,Latitude,Longitude,Altitude,Accuracy,Altitude Accuracy,Heading,Speed,Timestamp
+1,C,52.2205157,6.895970800000001,null,757,null,null,null,Sat Aug 24 2013 11:33:01 GMT+0200 (CEST)

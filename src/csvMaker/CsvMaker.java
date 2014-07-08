@@ -48,15 +48,46 @@ public class CsvMaker extends JFrame implements ActionListener{
         }
     }
     
+    public static int count(final String string, final String substring)
+    {
+       int count = 0;
+       int idx = 0;
 
+       while ((idx = string.indexOf(substring, idx)) != -1)
+       {
+          idx++;
+          count++;
+       }
 
+       return count;
+    }
+
+    /**
+     * Count the number of instances of character within a string.
+     *
+     * @param string     String to look for substring in.
+     * @param c          Character to look for.
+     * @return           Count of substrings in string.
+     */
+    public static int count(final String string, final char c)
+    {
+       return count(string, String.valueOf(c));
+    }
+
+    /**
+     * generateCSVFile
+     * Using a directory and output filename this function generates a .csv file by compiling multiple text files
+     * the directory should contain folders of teams, which contain device folders, which contain input text files
+     * @param directoryName		name of directory folder to look at
+     * @param fileName			name of the output file as fileName
+     */
 	public void generateCSVFile(String directoryName,String fileName)
     {
     	
     	try
     	{
     		//Question,Answer,Latitude,Longitude,Altitude,Accuracy,Altitude Accuracy,Heading,Speed,Timestamp,TeamId,DeviceType,DeviceId
-    	    FileWriter writer = new FileWriter(fileName);
+    	    FileWriter writer = new FileWriter(fileName+".csv");
     	    writer.append("Question,Answer,Latitude,Longitude,Altitude,Accuracy,Altitude Accuracy,Heading,Speed,Timestamp,TeamId,DeviceType,DeviceId\n");
 
     	    File directory = new File(directoryName);
@@ -96,18 +127,41 @@ public class CsvMaker extends JFrame implements ActionListener{
             			sc.useDelimiter(",");
             			while(sc.hasNextLine())
             			{
-            				String[] orig = sc.nextLine().split(",");							//the timestamp is the last part of data for each line
+            				String line = sc.nextLine();
+            				
+            				String[] orig = line.split(",");									//the timestamp is the last part of data for each line
             				orig[orig.length-1] = ""+getDate(orig[orig.length-1]).getTime();	//reformat timestamp if necessary
             				
-            				for(String s: orig)
+            				int commaCount = count(line, ",");				//determine the number of commas in the line
+            				if(commaCount == 10)							//if there are 10 commas, then the answer contains a comma, and should be swapped with a period
             				{
-            					if(s.equals("NaN"))								//null changes to NaN in the split function, so change it back
-            						writer.append("null,");
-            					
-            					else
-            						writer.append(s+",");						//otherwise append the data like usual
+            					for(int i = 0; i < orig.length; i++)
+            					{
+            						if(i==1)
+            						{
+            							writer.append(orig[i]+".");
+            						}
+            						else
+            						{
+            							if(orig[i].equals("NaN"))
+            								writer.append("null,");
+            							
+            							else
+            								writer.append(orig[i]+",");
+            						}
+            					}
             				}
-            				
+            				else
+            				{		
+	            				for(String s: orig)
+	            				{
+	            					if(s.equals("NaN"))								//null changes to NaN in the split function, so change it back
+	            						writer.append("null,");
+	            					
+	            					else
+	            						writer.append(s+",");						//otherwise append the data like usual
+	            				}
+            				}
             				writer.append(f.getName()+",");						//append the teamID, phoneType, and device ID
             				writer.append(phoneType+",");
             				writer.append(phoneID);
@@ -203,20 +257,22 @@ public class CsvMaker extends JFrame implements ActionListener{
 	            folderName.setText(""+chooser.getSelectedFile());
 	            
 	        } else {
-	            System.out.println("No Selection ");
+	            //System.out.println("No Selection ");
 	        }
 		}
 		else if(e.getSource()==goButton)
 		{
 			try{
-				generateCSVFile(folderName.getText(),fileName.getText()+".csv");
+				this.setTitle(".csv Maker");
+				generateCSVFile(folderName.getText(),fileName.getText());
 				String current = new java.io.File( "." ).getCanonicalPath();
 				System.out.println("File "+fileName.getText()+".csv created in "+current);
 				this.setTitle("File "+fileName.getText()+".csv created in "+current);
 			}
 			catch(Exception ex)
 			{
-				System.out.println("File name or Folder path not valid");
+				//System.out.println("File name or Folder path not valid");
+				this.setTitle("File name or Folder path not valid");
 			}
 		}
 	}

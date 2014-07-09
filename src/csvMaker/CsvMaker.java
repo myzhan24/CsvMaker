@@ -5,11 +5,14 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Properties;
 import java.util.Scanner;
 
 import javax.swing.JButton;
@@ -74,128 +77,13 @@ public class CsvMaker extends JFrame implements ActionListener{
        return count(string, String.valueOf(c));
     }
 
-    /**
-     * generateCSVFile
-     * Using a directory and output filename this function generates a .csv file by compiling multiple text files
-     * the directory should contain folders of teams, which contain device folders, which contain input text files
-     * @param directoryName		name of directory folder to look at
-     * @param fileName			name of the output file as fileName
-     */
-	public void generateCSVFile(String directoryName,String fileName)
-    {
-    	
-    	try
-    	{
-    		//Question,Answer,Latitude,Longitude,Altitude,Accuracy,Altitude Accuracy,Heading,Speed,Timestamp,TeamId,DeviceType,DeviceId
-    	    FileWriter writer = new FileWriter(fileName+".csv");
-    	    writer.append("Question,Answer,Latitude,Longitude,Altitude,Accuracy,Altitude Accuracy,Heading,Speed,Timestamp,TeamId,DeviceType,DeviceId\n");
-
-    	    File directory = new File(directoryName);
-        	//Open up each group ID
-            File[] fList = directory.listFiles();
-            for(File f : fList)	//goes through each group
-            {
-            	File groupDirectory = new File(f.getAbsolutePath());
-            	File[] gList = groupDirectory.listFiles();	
-            	for(File g : gList)	//goes through each phone in the group
-            	{
-            		int firstHyphen=g.getName().indexOf('-');					//determines the device type, android or iOS
-            		String phoneType = g.getName().substring(0, firstHyphen);	
-            		String phoneID=g.getName().substring(firstHyphen+1);		//determines the device ID
-            		File latestAnswersFile = null;
-            		
-            		//Open files within the phone
-            		File phoneDirectory = new File(g.getAbsolutePath());
-            		File[] pList = phoneDirectory.listFiles();
-            		for(File p : pList)	//goes through each of the files within a phone
-            		{
-            			//Determine the most recent answers file
-            			if(p.getName().contains("answers"))
-            			{
-            				if(latestAnswersFile==null)
-            					latestAnswersFile=p;
-            				
-            				else if(p.getName().compareTo(latestAnswersFile.getName())>0)
-            					latestAnswersFile=p;
-            			}       			
-            		}
-            		Scanner sc = null;
-            		try	//append the old data, formatting all time stamps to UNIX if necessary
-            		{
-            			sc = new Scanner(latestAnswersFile);
-            			sc.nextLine();
-            			sc.useDelimiter(",");
-            			while(sc.hasNextLine())
-            			{
-            				String line = sc.nextLine();
-            				
-            				String[] orig = line.split(",");									//the timestamp is the last part of data for each line
-            				orig[orig.length-1] = ""+getDate(orig[orig.length-1]).getTime();	//reformat timestamp if necessary
-            				
-            				int commaCount = count(line, ",");				//determine the number of commas in the line
-            				if(commaCount == 10)							//if there are 10 commas, then the answer contains a comma, and should be swapped with a period
-            				{
-            					for(int i = 0; i < orig.length; i++)
-            					{
-            						if(i==1)
-            						{
-            							writer.append(orig[i]+".");
-            						}
-            						else
-            						{
-            							if(orig[i].equals("NaN"))
-            								writer.append("null,");
-            							
-            							else
-            								writer.append(orig[i]+",");
-            						}
-            					}
-            				}
-            				else
-            				{		
-	            				for(String s: orig)
-	            				{
-	            					if(s.equals("NaN"))								//null changes to NaN in the split function, so change it back
-	            						writer.append("null,");
-	            					
-	            					else
-	            						writer.append(s+",");						//otherwise append the data like usual
-	            				}
-            				}
-            				writer.append(f.getName()+",");						//append the teamID, phoneType, and device ID
-            				writer.append(phoneType+",");
-            				writer.append(phoneID);
-            				writer.append("\n");		
-            			}
-            			
-            		}
-            		catch(Exception e)
-            		{
-            			
-            		}
-            		finally
-            		{
-            			if(sc!=null)
-            				sc.close();
-            		}
-            	}
-            }
-
-    	    writer.flush();
-    	    writer.close();
-    	}
-    	catch(IOException e)
-    	{
-    	     e.printStackTrace();
-    	} 
-    	
-    }
+    
     
     private CsvMaker()
     {
     	
     	super(".csv Maker");
-    	setSize(600,110);
+    	setSize(600,115);
     	setResizable(false);
     	setDefaultCloseOperation(EXIT_ON_CLOSE);
     	Container container = getContentPane();
@@ -234,15 +122,170 @@ public class CsvMaker extends JFrame implements ActionListener{
     	
     }
     
+    
+    
+    /**
+     * generateCSVFile
+     * Using a directory and output filename this function generates a .csv file by compiling multiple text files
+     * the directory should contain folders of teams, which contain device folders, which contain input text files
+     * @param directoryName		name of directory folder to look at
+     * @param fileName			name of the output file as fileName
+     */
+	public void generateCSVFile(String directoryName,String fileName)
+    {
+    	
+		Properties prop = new Properties();
+		InputStream propertyInput = null;
+		
+    	try
+    	{
+    		
+			
+    		//Question,Answer,Latitude,Longitude,Altitude,Accuracy,Altitude Accuracy,Heading,Speed,Timestamp,TeamId,DeviceType,DeviceId
+    	    FileWriter writer = new FileWriter(fileName+".csv");
+    	    writer.append("Question,Answer,Latitude,Longitude,Altitude,Accuracy,Altitude Accuracy,Heading,Speed,Timestamp,TeamId,DeviceType,DeviceId\n");
+
+    	    File directory = new File(directoryName);
+        	//Open up each group ID
+            File[] fList = directory.listFiles();
+            for(File f : fList)	//goes through each group
+            {
+            	if(f.getName().contains("properties"))	//skipping the properties files
+            	{
+            		
+            	}
+            	else
+            	{	            	
+	            	propertyInput = new FileInputStream(f.getAbsolutePath()+".properties"); //open a properties file for each group
+	    			prop.load(propertyInput);												//load the properties
+	            	
+	            	File groupDirectory = new File(f.getAbsolutePath());
+	            	File[] gList = groupDirectory.listFiles();	
+	            	for(File g : gList)	//goes through each phone in the group
+	            	{
+	            		int firstHyphen=g.getName().indexOf('-');					//determines the device type, android or iOS
+	            		String phoneType = g.getName().substring(0, firstHyphen);	
+	            		String phoneID=g.getName().substring(firstHyphen+1);		//determines the device ID
+	            		File latestAnswersFile = null;
+	            		
+	            		//Open files within the phone
+	            		File phoneDirectory = new File(g.getAbsolutePath());
+	            		File[] pList = phoneDirectory.listFiles();
+	            		for(File p : pList)	//goes through each of the files within a phone
+	            		{
+	            			//Determine the most recent answers file
+	            			if(p.getName().contains("answers"))
+	            			{
+	            				if(latestAnswersFile==null)
+	            					latestAnswersFile=p;
+	            				
+	            				else if(p.getName().compareTo(latestAnswersFile.getName())>0)
+	            					latestAnswersFile=p;
+	            			}       			
+	            		}
+	            		Scanner sc = null;
+	            		try	//append the old data, formatting all time stamps to UNIX time stamp format if necessary
+	            		{
+	            			sc = new Scanner(latestAnswersFile);
+	            			sc.nextLine();
+	            			sc.useDelimiter(",");
+	            			while(sc.hasNextLine())
+	            			{
+	            				String line = sc.nextLine();
+	            				
+	            				String[] orig = line.split(",");									//the time stamp is the last part of data for each line
+	            				orig[orig.length-1] = ""+getDate(orig[orig.length-1]).getTime();	//reformat time stamp if necessary
+	            				
+								Scanner scan = new Scanner(prop.getProperty(orig[0]));				//format the question number based on the properties file
+								scan.useDelimiter("[^0-9]+");										//isolate the integer
+	            				orig[0]=""+scan.nextInt();
+	            				scan.close();
+	            				
+	            				int commaCount = count(line, ",");				//determine the number of commas in the line
+	            				if(commaCount == 10)							//if there are 10 commas, then the answer contains a comma, and should be swapped with a period
+	            				{
+	            					for(int i = 0; i < orig.length; i++)
+	            					{
+	            						if(i==1)
+	            						{
+	            							writer.append(orig[i]+".");
+	            						}
+	            						else
+	            						{
+	            							if(orig[i].equals("NaN"))
+	            								writer.append("null,");
+	            							
+	            							else
+	            								writer.append(orig[i]+",");
+	            						}
+	            					}
+	            				}
+	            				else
+	            				{		
+		            				for(String s: orig)
+		            				{
+		            					if(s.equals("NaN"))								//null changes to NaN in the split function, so change it back
+		            						writer.append("null,");
+		            					
+		            					else
+		            						writer.append(s+",");						//otherwise append the data like usual
+		            				}
+	            				}
+	            				writer.append(f.getName()+",");						//append the teamID, phoneType, and device ID
+	            				writer.append(phoneType+",");
+	            				writer.append(phoneID);
+	            				writer.append("\n");		
+	            			}
+	            			
+	            		}
+	            		catch(Exception e)
+	            		{
+	            			
+	            		}
+	            		finally
+	            		{
+	            			if(sc!=null)
+	            			{
+	            				try
+	            				{
+	            					sc.close();
+	            				}
+	            				catch(Exception e)
+	            				{
+	            					e.printStackTrace();
+	            				}
+	            			}
+	            			if (propertyInput != null) 
+	            			{
+	            				try 
+	            				{
+	            					propertyInput.close();
+	            				} 
+	            				catch (IOException e) 
+	            				{
+	            					e.printStackTrace();
+	            				}
+	            			}
+	            		}
+	            	}
+            	}
+            }
+
+    	    writer.flush();
+    	    writer.close();
+    	}
+    	catch(IOException e)
+    	{
+    	     e.printStackTrace();
+    	} 
+    	
+    }
+    
+    
 	public static void main(String args[])
 	{
 		CsvMaker myCsv = new CsvMaker();
-		myCsv.setVisible(true);
-		
-       // String directoryLinuxMac ="/home/myz/csvMaker/data";
-       // myCsv.parsePhones(directoryLinuxMac);
-       // myCsv.generateCSVFile(directoryLinuxMac,"test.csv");
-        
+		myCsv.setVisible(true);   
 	}
 
 	public void actionPerformed(ActionEvent e) {

@@ -1,2 +1,0 @@
-Latitude,Longitude,Altitude,Accuracy,Altitude Accuracy,Heading,Speed,Timestamp
-52.22007517,6.89442029,104.80000305175781,5,null,null,0,1377368440432

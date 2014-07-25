@@ -20,6 +20,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JTextField;
 
+
 public class CsvMaker extends JFrame implements ActionListener{
 	
 	/**
@@ -75,13 +76,9 @@ public class CsvMaker extends JFrame implements ActionListener{
     public static int count(final String string, final char c)
     {
        return count(string, String.valueOf(c));
-    }
-
-    
-    
+    }  
     private CsvMaker()
-    {
-    	
+    { 	
     	super(".csv Maker");
     	setSize(600,115);
     	setResizable(false);
@@ -101,25 +98,19 @@ public class CsvMaker extends JFrame implements ActionListener{
         chooser.setAcceptAllFileFilterUsed(false);
         chooser.addActionListener(this);
     	folderName = new JTextField(chooser.getCurrentDirectory().toString(),35);
-    	
-    	
+    	  	
     	goButton = new JButton("Create");
     	goButton.addActionListener(this);
     	
     	openButton = new JButton("Open");
     	openButton.addActionListener(this);
-    	
-    	
-        
-        
+    	    
         container.add(folderNameTitle);
         container.add(folderName);
     	container.add(fileNameTitle);
     	container.add(fileName);
     	container.add(openButton);
-    	container.add(goButton);
-    	
-    	
+    	container.add(goButton);	
     }
     
     
@@ -139,8 +130,6 @@ public class CsvMaker extends JFrame implements ActionListener{
 		
     	try
     	{
-    		
-			
     		//Question,Answer,Latitude,Longitude,Altitude,Accuracy,Altitude Accuracy,Heading,Speed,Timestamp,TeamId,DeviceType,DeviceId
     	    FileWriter writer = new FileWriter(fileName+".csv");
     	    writer.append("Question,Answer,Latitude,Longitude,Altitude,Accuracy,Altitude Accuracy,Heading,Speed,Timestamp,TeamId,DeviceType,DeviceId\n");
